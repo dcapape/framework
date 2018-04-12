@@ -144,6 +144,15 @@ class Handler {
 	 */
 	public function handleException($exception)
 	{
+		if ( ! $exception instanceof Exception) {
+		    $exception = new ErrorException(
+			    $exception->getMessage(),
+			    $exception->getCode(),
+			    E_ERROR,
+			    $exception->getFile(),
+			    $exception->getLine()
+		    );
+	    }
 		$response = $this->callCustomHandlers($exception);
 
 		// If one of the custom error handlers returned a response, we will send that
